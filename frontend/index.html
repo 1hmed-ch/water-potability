@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>WaterSense AI - Water Potability Testing</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="img/water-safety.png">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
+
+        @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
+        :root {
+            --primary: #00D1F9;
+            --secondary: #19409A;
+            --light: #F2F9F9;
+            --dark: #001442;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Josefin Sans', sans-serif;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Open Sans', sans-serif;
+            color: #808080;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Dosis', serif;
+            color: var(--dark);
+        }
+        .navbar {
+            padding: 20px 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+        .navbar-brand h1 {
+            color: var(--primary);
+            font-size: 2rem;
+            font-weight: 800;
+            margin: 0;
+        }
+        .navbar-nav .nav-link {
+            color: var(--dark);
+            font-weight: 500;
+            margin: 0 15px;
+            transition: all 0.3s;
+        }
+        .navbar-nav .nav-link:hover,
+        .navbar-nav .nav-link.active {
+            color: var(--primary);
+        }
+        .hero {
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+            color: white;
+            padding: 150px 0 80px;
+            position: relative;
+            overflow: hidden;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 209, 249, 0.1), transparent);
+            animation: pulse 4s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00D1F9, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+        .hero p {
+            font-size: 1.3rem;
+            color: #94a3b8;
+            margin-bottom: 30px;
+        }
+        .hero-emoji {
+            font-size: 15rem;
+            opacity: 0.3;
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-30px); }
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.3s;
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 209, 249, 0.3);
+        }
+        .btn-outline-light {
+            border: 2px solid white;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.3s;
+        }
+        .btn-outline-light:hover {
+            background: white;
+            color: var(--dark);
+            transform: translateY(-3px);
+        }
+        .features {
+            padding: 80px 0;
+            background: var(--light);
+        }
+        .feature-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.3s;
+            height: 100%;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 209, 249, 0.2);
+        }
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 2rem;
+            color: white;
+        }
+        .feature-card h4 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        .feature-card p {
+            color: #64748b;
+            line-height: 1.6;
+        }
+        .water-safety {
+            padding: 80px 0;
+            background: white;
+        }
+        .info-card {
+            background: var(--light);
+            padding: 30px;
+            border-radius: 15px;
+            transition: all 0.3s;
+            height: 100%;
+            border-left: 4px solid var(--primary);
+        }
+        .info-card:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 30px rgba(0, 209, 249, 0.15);
+        }
+        .info-card h4 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+        .info-card p {
+            color: #64748b;
+            line-height: 1.8;
+        }
+        .info-card .badge {
+            background: var(--primary);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-top: 10px;
+        }
+        .stats {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            padding: 60px 0;
+            color: white;
+        }
+        .stat-item {
+            text-align: center;
+        }
+        .stat-item h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 10px;
+        }
+        .stat-item p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        .team {
+            padding: 80px 0;
+            background: var(--light);
+        }
+        .team-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+        .team-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 209, 249, 0.2);
+        }
+        .team-img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+        }
+        .team-info {
+            padding: 25px;
+            text-align: center;
+        }
+        .team-info h4 {
+            margin-bottom: 5px;
+            color: var(--dark);
+        }
+        .team-info .position {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        .team-info p {
+            color: #64748b;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        .cta {
+            background: var(--dark);
+            padding: 80px 0;
+            color: white;
+            text-align: center;
+        }
+        .cta h2 {
+            font-size: 3rem;
+            color: white;
+            margin-bottom: 20px;
+        }
+        .cta p {
+            font-size: 1.3rem;
+            color: #94a3b8;
+            margin-bottom: 40px;
+        }
+        .footer {
+            background: var(--dark);
+            color: #94a3b8;
+            padding: 40px 0 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .footer a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .footer a:hover {
+            color: var(--primary);
+        }
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .hero p {
+                font-size: 1.1rem;
+            }
+            .hero-emoji {
+                font-size: 8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a href="#home" class="navbar-brand">
+                <h1><i class="fas fa-tint me-2"></i>WaterSense AI</h1>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a href="#home" class="nav-link active">Home</a></li>
+                    <li class="nav-item"><a href="#water-safety" class="nav-link">Water Safety Info</a></li>
+                    <li class="nav-item"><a href="predict.html" class="nav-link">Test Water</a></li>
+                    <li class="nav-item"><a href="#team" class="nav-link">Our Team</a></li>
+                </ul>
+                <a href="predict.html" class="btn btn-primary ms-3">Check Water Now</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 hero-content" data-aos="fade-right">
+                    <h1>AI-Powered Water Safety Testing</h1>
+                    <p>Check if your water is safe to drink in seconds using advanced machine learning technology.</p>
+                    <div class="d-flex gap-3 flex-wrap">
+                        <a href="predict.html" class="btn btn-primary"><i class="fas fa-flask me-2"></i>Test Water Now</a>
+                        <a href="#water-safety" class="btn btn-outline-light">Learn More</a>
+                    </div>
+                </div>
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="text-center hero-emoji">💧</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <h2 class="display-4 fw-bold">Why Choose WaterSense AI?</h2>
+                <p class="lead text-muted">Advanced technology meets water safety</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-brain"></i></div>
+                        <h4>AI-Powered</h4>
+                        <p>Machine learning algorithms trained on thousands of water samples</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+                        <h4>Instant Results</h4>
+                        <p>Get water safety analysis in seconds, not days</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                        <h4>Highly Accurate</h4>
+                        <p>96%+ accuracy rate validated against laboratory standards</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-mobile-alt"></i></div>
+                        <h4>Easy to Use</h4>
+                        <p>Simple interface - just enter parameters and get results</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="water-safety" id="water-safety">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <h2 class="display-4 fw-bold">Water Safety Information</h2>
+                <p class="lead text-muted">Understanding water quality parameters</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="info-card">
+                        <h4><i class="fas fa-flask me-2"></i>pH Level</h4>
+                        <p>Measures acidity/alkalinity. Safe drinking water: 6.5-8.5</p>
+                        <span class="badge">Safe: 6.5-8.5</span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="info-card">
+                        <h4><i class="fas fa-tint me-2"></i>Turbidity</h4>
+                        <p>Indicates cloudiness. High turbidity harbors harmful microorganisms</p>
+                        <span class="badge">Lower is Better</span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="info-card">
+                        <h4><i class="fas fa-vial me-2"></i>Chloramines</h4>
+                        <p>Water disinfectant. Levels above 4 ppm can cause health issues</p>
+                        <span class="badge">Safe: ≤ 4 ppm</span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="400">
+                    <div class="info-card">
+                        <h4><i class="fas fa-atom me-2"></i>Total Dissolved Solids</h4>
+                        <p>TDS measures minerals and salts. High levels affect taste</p>
+                        <span class="badge">Optimal: < 500 ppm</span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="500">
+                    <div class="info-card">
+                        <h4><i class="fas fa-bolt me-2"></i>Conductivity</h4>
+                        <p>Electrical conductivity indicates dissolved ion concentration</p>
+                        <span class="badge">μS/cm</span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="600">
+                    <div class="info-card">
+                        <h4><i class="fas fa-leaf me-2"></i>Organic Carbon</h4>
+                        <p>Natural organic matter. Lower values ensure better quality</p>
+                        <span class="badge">Lower is Better</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-md-3 col-6 mb-4 mb-md-0" data-aos="zoom-in">
+                    <div class="stat-item">
+                        <h2><span data-count="1000">0</span>+</h2>
+                        <p>Tests Completed</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6 mb-4 mb-md-0" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="stat-item">
+                        <h2><span data-count="50">0</span>+</h2>
+                        <p>Training Samples</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="stat-item">
+                        <h2><span data-count="200">0</span>+</h2>
+                        <p>Happy Users</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="stat-item">
+                        <h2><span data-count="9">0</span></h2>
+                        <p>Parameters Analyzed</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="team" id="team">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <h2 class="display-4 fw-bold">Meet Our Team</h2>
+                <p class="lead text-muted">Engineering students creating smart water safety tools</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3" data-aos="flip-left">
+                    <div class="team-card">
+                        <img src="path/to/image1.jpg" alt="Yassine Benkacem" class="team-img">
+                        <div class="team-info">
+                            <h4>Yassine Benkacem</h4>
+                            <p class="position">AI Future Engineer Student</p>
+                            <p>Developing the model performance</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3" data-aos="flip-left" data-aos-delay="100">
+                    <div class="team-card">
+                        <img src="img/Ayoub.PNG" alt="Ayoub Ameur" class="team-img">
+                        <div class="team-info">
+                            <h4>Ayoub Ameur</h4>
+                            <p class="position">AI Future Engineer Student</p>
+                            <p>Analyzing the data </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3" data-aos="flip-left" data-aos-delay="200">
+                    <div class="team-card">
+                        <img src="img/Ahmed.PNG" alt="Ahmed Chekhmani" class="team-img">
+                        <div class="team-info">
+                            <h4>Ahmed Chekhmani</h4>
+                            <p class="position">AI Future Engineer Student</p>
+                            <p>Testing the model and Integrating AI part with FastAPI</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3" data-aos="flip-left" data-aos-delay="300">
+                    <div class="team-card">
+                        <img src="img/A14.PNG" alt="Anass Hadioui" class="team-img">
+                        <div class="team-info">
+                            <h4>Anass Hadioui</h4>
+                            <p class="position">AI Future Engineer Student</p>
+                            <p>Testing model and Integrating AI part with FastAPI</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta" data-aos="fade-up">
+        <div class="container">
+            <h2>Ready to Test Your Water?</h2>
+            <p>Get instant AI-powered water safety analysis</p>
+            <a href="predict.html" class="btn btn-primary btn-lg"><i class="fas fa-flask me-2"></i>Start Testing Now</a>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4 class="text-white mb-3"><i class="fas fa-tint me-2"></i>AquaSafe AI</h4>
+                    <p>AI-powered water quality testing for a safer tomorrow.</p>
+                </div>
+                <div class="col-md-3">
+                    <h5 class="text-white mb-3">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#water-safety">Water Safety Info</a></li>
+                        <li><a href="predict.html">Test Water</a></li>
+                        <li><a href="#team">Our Team</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5 class="text-white mb-3">Contact</h5>
+                    <p><i class="fas fa-envelope me-2"></i>watersenseAI.tech@gmail.com</p>
+                    <p><i class="fas fa-phone me-2"></i>+2127 14 55 17 43</p>
+                </div>
+            </div>
+            <hr style="border-color: rgba(255, 255, 255, 0.1); margin: 30px 0 20px;">
+            <div class="text-center">
+                <p class="mb-0">&copy; 2025 WaterSense AI. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({duration: 800, once: true});
+        
+        const counters = document.querySelectorAll('[data-count]');
+        const animateCounter = (counter) => {
+            const target = parseInt(counter.getAttribute('data-count'));
+            const duration = 2000;
+            const increment = target / (duration / 16);
+            let current = 0;
+            const updateCounter = () => {
+                current += increment;
+                if (current < target) {
+                    counter.textContent = Math.floor(current);
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    counter.textContent = target;
+                }
+            };
+            updateCounter();
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    counters.forEach(counter => animateCounter(counter));
+                    observer.disconnect();
+                }
+            });
+        });
+        
+        const statsSection = document.querySelector('.stats');
+        if (statsSection) observer.observe(statsSection);
+        
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({behavior: 'smooth', block: 'start'});
+                }
+            });
+        });
+        
+        const navbar = document.getElementById('navbar');
+        const navLinks = document.querySelectorAll('.nav-link');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+            
+            let current = '';
+            document.querySelectorAll('section').forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (window.pageYOffset >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
